@@ -1,0 +1,27 @@
+server {
+    listen 80;
+    location ~ /(.*)/(.*)/(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass __to_host__;
+    }
+    location ~ /(.*)/(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass __to_host__;
+    }
+    location ~ /(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass __to_host__/$3/__source_host__/$1/$2;
+    }
+    location ~ /(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass __to_host__/__source_host__/$1/$2;
+    }
+}

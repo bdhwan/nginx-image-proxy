@@ -1,0 +1,27 @@
+server {
+    listen 80;
+    location ~ /(.*)/(.*)/(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass image-proxy;
+    }
+    location ~ /(.*)/(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass image-proxy;
+    }
+    location ~ /(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass image-proxy/$3/https://giftistardiag732.blob.core.windows.net/$1/$2;
+    }
+    location ~ /(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass image-proxy/https://giftistardiag732.blob.core.windows.net/$1/$2;
+    }
+}

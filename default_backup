@@ -1,0 +1,31 @@
+server {
+    listen 80;
+    server_name image.giftistar.net image.giftistar.com drive.giftistar.com;
+    location ~ /(.*)/(.*)/(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass http://localhost:8082;
+    }
+    location ~ /(.*)/(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass http://localhost:8082;
+    }
+    location ~ /(.*)/(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass http://localhost:8082/$3/https://giftistardiag732.blob.core.windows.net/$1/$2;
+    }
+    location ~ /(.*)/(.*) {
+        expires 6M;
+        access_log off;
+        add_header Cache-Control "public";
+        proxy_pass http://localhost:8082/https://giftistardiag732.blob.core.windows.net/$1/$2;
+    }
+    location ~* {
+      proxy_pass http://localhost/index.html;
+    }
+}
