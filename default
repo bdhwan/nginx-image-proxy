@@ -24,7 +24,4 @@ server {
         add_header Cache-Control "public";
         proxy_pass __to_host__/__source_host__/$1/$2;
     }
-    location ~* {
-      proxy_pass http://localhost/index.html;
-    }
 }
